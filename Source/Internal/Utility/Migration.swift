@@ -165,6 +165,10 @@ extension NSKeyedUnarchiver {
     }
 
     static func unarchive(data: Data) -> AnyObject? {
-            return unarchiveObject(with: data) as AnyObject?
+        if #available(iOS 12.0, *) {
+            return unarchivedObject(ofClass: AnyObject, from: data)
+        }
+
+        return unarchiveObject(with: data) as AnyObject?
     }
 }

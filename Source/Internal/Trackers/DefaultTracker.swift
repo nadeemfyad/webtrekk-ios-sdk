@@ -569,7 +569,7 @@ final class DefaultTracker: Tracker {
         case .wifi:
             return .wifi
         case .cellular:
-            guard let carrierType = CTTelephonyNetworkInfo().currentRadioAccessTechnology else {
+            guard let carrierType = getCarrierType() else {
                 return .other
             }
 
@@ -592,6 +592,23 @@ final class DefaultTracker: Tracker {
         }
     }
     #endif
+
+    private func getCarrierType() -> String? {
+        // TODO: When supporting from 12.0+ remove this block, data structure changed
+        if #available(iOS 12.0, *) {
+            guard let carrierType = CTTelephonyNetworkInfo().serviceCurrentRadioAccessTechnology,
+                (carrierType.first?.key) != nil else {
+                return nil
+            }
+
+            return carrierType.first?.key
+        }
+        guard let carrierType = CTTelephonyNetworkInfo().currentRadioAccessTechnology else {
+            return nil
+        }
+
+        return carrierType
+    }
 
     //request for old backup file path. It is required for transiation only
     private static func requestQueueBackupFileForWebtrekkId(_ webtrekkId: String) -> URL? {
