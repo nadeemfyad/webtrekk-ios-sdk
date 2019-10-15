@@ -105,4 +105,4 @@ For an example app of the functionality in this SDK see: https://github.com/Webt
 
 # License
 
-See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
+See the [LICENSE](u.md) file for license rights and limitations (MIT).
